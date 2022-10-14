@@ -1,0 +1,8 @@
+# Cached python
+**/__pycache__
+
+# Omit mac file
+**/.DS_STORE
+
+# environment files
+.env
