@@ -20,7 +20,7 @@ As outlined in the problem statement and from the context gathered in the direct
 Docker
 
 ```bash
-docker build --squash -t fetch_rewards .
+docker build -t fetch_rewards .
 docker run -it -p 8000:80 -v ${PWD}/:/usr/src/app fetch_rewards
 ```
 
