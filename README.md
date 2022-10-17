@@ -13,6 +13,10 @@ This app is an HTTP web service built in [Python](https://www.python.org/) and t
 
 As outlined in the problem statement and from the context gathered in the directions throughout I am focusing on a single user.  With more time and more complex requirements I would assume a more complex data model for payers/users/points.  
 
+### Transactions
+
+Since the provided series of transactions included a negative transaction with a timestamp that is before there was enough points to be spent for said transaction I have assumed that there is a processing of these transactions before a spend would happen versus validating these on the add transaction call.  I have opinions on this and questions but this is how I choose to solve the problem based on the context.
+
 ---
 
 ## Quickstart
