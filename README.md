@@ -40,13 +40,13 @@ uvicorn main:app --reload
 ### Run Tests
 
 ```bash
-docker run -it -v ${PWD}/:/usr/src/app fetch_rewards pytest
+docker run -it -v ${PWD}/:/usr/src/app fetch_rewards pytest --cov=app
 ```
 
 or 
 
 ```bash
-pytest
+pytest --cov=app
 ```
 
 ## Development Notes

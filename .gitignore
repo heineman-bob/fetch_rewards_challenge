@@ -6,3 +6,10 @@
 
 # environment files
 .env
+
+**/htmlcov
+
+.vscode/
+
+# pytest coverage file
+.coverage

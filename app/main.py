@@ -3,7 +3,7 @@ from fastapi import FastAPI, Response, status, HTTPException
 from datetime import datetime
 from app.models import Points, Transaction, TransactionsStore
 
-description = '''This web service accepts HTTP requests and returns json responses. 
+description = """This web service accepts HTTP requests and returns json responses. 
 It follows the logic provided in the directions PDF located in the root of this repository. 
 
 ### Endpoints Implemented:
@@ -11,17 +11,15 @@ It follows the logic provided in the directions PDF located in the root of this 
 * add transactions
 * spend points
 * point balance
-'''
+"""
 
 app = FastAPI(
     title="Fetch Rewards Coding Exercise - BSE",
     description=description,
     version="0.0.1",
-    contact={
-        "name": "Robert Heineman",
-        "email": "heineman.bob@gmail.com"
-    },
-    docs_url="/", redoc_url="/docs",
+    contact={"name": "Robert Heineman", "email": "heineman.bob@gmail.com"},
+    docs_url="/",
+    redoc_url="/docs",
 )
 
 # Using in memory data stores
@@ -40,28 +38,24 @@ def get_transactions():
 
 @app.post("/transactions", tags=["Transactions"])
 def create_transaction(transaction: Transaction, response: Response):
-    """Add transactions for a specific payer and date.
-    """
-    try:
-        created_transaction = data_store.add_transaction(transaction)
-        return created_transaction
-    except ValueError as e:
-        raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail=str(e))  
+    """Add transactions for a specific payer and date."""
+    created_transaction = data_store.add_transaction(transaction)
+    return created_transaction
 
 
-@app.post("/transactions/spend", tags=["Transactions"])
+@app.post("/points/spend", tags=["Points"])
 def spend_points(points: Points):
-    """Spend points using the rules outlined and return a list deduction transactions
-    """
+    """Spend points using the rules outlined and return a list deduction transactions"""
     if points.points > data_store.get_total_balance():
-        raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, 
-                detail="Not enough available points")
-    
+        raise HTTPException(
+            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            detail="Not enough available points",
+        )
+
     return data_store.spend_points(points)
 
 
-@app.get("/balances", tags=["Accounts"])
+@app.get("/points/balances", tags=["Accounts"])
 def get_balances():
-    """Return all payer point balances.
-    """
+    """Return all payer point balances."""
     return data_store.get_balance_summary()
