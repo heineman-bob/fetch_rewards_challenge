@@ -32,22 +32,23 @@ Linux based
 python3.10 -m venv .env
 source .env/bin/activate
 pip install -r requirements.txt
-cd app
-uvicorn main:app --reload
+uvicorn app.main:app --reload
 ```
 ---
 
 ### Run Tests
 
 ```bash
-docker run -it -v ${PWD}/:/usr/src/app fetch_rewards pytest --cov=app
+docker run -it -v ${PWD}/:/usr/src/app fetch_rewards pytest --cov-report html --cov=app
 ```
 
 or 
 
 ```bash
-pytest --cov=app
+pytest  --cov-report html --cov=app
 ```
+
+Open ```./htmlcov/index.html``` in a browser to view coverage report
 
 ## Development Notes
 
@@ -62,7 +63,7 @@ docker run -it -p 8000:80 -v ${PWD}/app:/usr/src/app fetch_rewards
 or locally
 
 ```bash
-uvicorn app/main:app --reload
+uvicorn app.main:app --reload
 ```
 
 
