@@ -27,6 +27,17 @@ app = FastAPI(
 # Using in memory data stores
 data_store = TransactionsStore()
 
+
+@app.get("/transactions", tags=["Transactions"])
+def get_transactions():
+    """List all transactions
+
+    Notes:
+         I included this for transparency into how spend transactions are recorded
+    """
+    return data_store.transactions
+
+
 @app.post("/transactions", tags=["Transactions"])
 def create_transaction(transaction: Transaction, response: Response):
     """Add transactions for a specific payer and date.
@@ -47,16 +58,6 @@ def spend_points(points: Points):
                 detail="Not enough available points")
     
     return data_store.spend_points(points)
-
-
-@app.get("/transactions", tags=["Transactions"])
-def get_transactions():
-    """List all transactions
-
-    Notes:
-         I included this for transparency into how spend transactions are recorded
-    """
-    return data_store.transactions
 
 
 @app.get("/balances", tags=["Accounts"])

@@ -20,10 +20,12 @@ class Points(BaseModel):
 
 
 class TransactionsStore():
-    """Memory store and management and logic of transactions and running balances
+    """Memory store management and logic
     """
-    transactions = []
-    balances = {}
+    # transactions = []
+
+    def __init__(self):
+        self.transactions = []
 
     def add_transaction(self, transaction: Transaction):    
         transaction.remaining_points = transaction.points
@@ -84,12 +86,11 @@ class TransactionsStore():
         if not payer or not timestamp:
             for transaction in deduct_transactions:
                 bisect.insort(self.transactions, transaction, key=lambda d: d.timestamp)
-                logger.warn(transaction.timestamp)
+
         return payer_summary
             
     def process_historic_spend(self):
         historic_spend_transactions = [x for x in self.transactions if x.remaining_points < 0]
-        logger.warn(historic_spend_transactions)
         for transaction in historic_spend_transactions:
             self.deduct_points(abs(transaction.remaining_points), payer=transaction.payer, timestamp=transaction.timestamp)
             transaction.remaining_points = 0
