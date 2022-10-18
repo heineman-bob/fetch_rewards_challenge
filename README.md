@@ -40,6 +40,10 @@ uvicorn app.main:app --reload
 ```
 ---
 
+### OpenAPI Documentation
+
+After app is running open [documentation here](http://localhost:8000/)
+
 ### Run Tests
 
 ```bash
