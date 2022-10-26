@@ -99,6 +99,16 @@ class TestTransactions:
         assert response.status_code == 422
         assert "Not enough" in str(response.json())
 
+    def test_spend_negative_points(
+        self, client, provided_test_transactions, create_spend_points_payload
+    ):
+        self.post_transactions(client, provided_test_transactions)
+        response = client.post(
+            "/points/spend", json=create_spend_points_payload(-40000)
+        )
+        assert response.status_code == 422
+        assert "ENSURE THIS VALUE IS GREATER THAN 0" in str(response.json()).upper()
+
     def test_spend_zero_points(
         self, client, provided_test_transactions, create_spend_points_payload
     ):

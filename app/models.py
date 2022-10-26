@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from datetime import datetime, timezone
 from typing import List, Dict
 import bisect
@@ -16,7 +16,11 @@ class Transaction(BaseModel):
 class Points(BaseModel):
     """Represents an amount of points"""
 
-    points: int
+    points: int = Field(
+        description="Points must be greater than zero",
+        title="Amount of points to spend",
+        gt=0,
+    )
 
 
 class TransactionsStore:
